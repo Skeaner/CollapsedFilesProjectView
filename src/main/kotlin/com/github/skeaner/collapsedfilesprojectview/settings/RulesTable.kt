@@ -60,7 +60,7 @@ class RulesTable(private val settingsProperty: ObservableMutableProperty<Setting
 
     override fun shouldEditRowOnCreation() = false
 
-    override fun createListModel() = ListTableModel<Rule>(ColorsColumn(), NameColumn(), RulesColumn())
+    override fun createListModel() = ListTableModel<Rule>(ColorsColumn(), NameColumn(), RulesColumn(), ShowChildrenColumn())
 
     override fun createElement() = Rule()
 
@@ -110,7 +110,7 @@ class RulesTable(private val settingsProperty: ObservableMutableProperty<Setting
         }
     }
 
-    private class NameColumn : ColumnInfo<Rule, String>(message("settings.name")) {
+    private class NameColumn : ColumnInfo<Rule, String>(message("settings.ruleName")) {
 
         override fun valueOf(item: Rule?) = item?.name
     }
@@ -118,5 +118,10 @@ class RulesTable(private val settingsProperty: ObservableMutableProperty<Setting
     private class RulesColumn : ColumnInfo<Rule, String>(message("settings.rule")) {
 
         override fun valueOf(item: Rule?) = item?.pattern
+    }
+
+    private class ShowChildrenColumn : ColumnInfo<Rule, String>(message("settings.children")) {
+
+        override fun valueOf(item: Rule?) = if (item?.showChildren == true) "show" else "hide"
     }
 }

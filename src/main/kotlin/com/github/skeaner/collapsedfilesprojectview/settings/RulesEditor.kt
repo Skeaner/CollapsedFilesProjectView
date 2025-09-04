@@ -1,9 +1,7 @@
 package com.github.skeaner.collapsedfilesprojectview.settings
 
+import com.github.skeaner.collapsedfilesprojectview.*
 import com.github.skeaner.collapsedfilesprojectview.MyBundle.message
-import com.github.skeaner.collapsedfilesprojectview.bindColor
-import com.github.skeaner.collapsedfilesprojectview.bindColorControl
-import com.github.skeaner.collapsedfilesprojectview.bindText
 import com.intellij.openapi.observable.properties.ObservableMutableProperty
 import com.intellij.openapi.observable.util.isNotNull
 import com.intellij.openapi.options.UiDslUnnamedConfigurable
@@ -26,6 +24,8 @@ class RulesEditor(val ruleProperty: ObservableMutableProperty<Rule?>) : UiDslUnn
     private lateinit var foregroundColorPanel: Cell<ColorPanel>
     private lateinit var nameTextField: Cell<JBTextField>
     private lateinit var patternTextField: Cell<ExpandableTextField>
+    private lateinit var showChildrenCheckBox: Cell<JBCheckBox>
+
 
     private val selectedRowPredicate = object : ComponentPredicate() {
 
@@ -39,7 +39,7 @@ class RulesEditor(val ruleProperty: ObservableMutableProperty<Rule?>) : UiDslUnn
 
     override fun Panel.createContent() {
         rowsRange {
-            row(message("settings.name")) {
+            row(message("settings.ruleName")) {
                 nameTextField = textField()
                     .align(Align.FILL)
                     .bindText(ruleProperty, Rule::name)
@@ -50,6 +50,10 @@ class RulesEditor(val ruleProperty: ObservableMutableProperty<Rule?>) : UiDslUnn
                     .align(Align.FILL)
                     .comment(message("settings.rule.comment"), 40)
                     .bindText(ruleProperty, Rule::pattern)
+            }
+            row(message("settings.other")) {
+                showChildrenCheckBox = checkBox(message("settings.showChildren"))
+                    .bindChecked(ruleProperty, Rule::showChildren)
             }
             row {
                 foregroundCheckBox = checkBox(message("settings.foreground"))

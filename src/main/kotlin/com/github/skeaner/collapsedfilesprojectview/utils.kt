@@ -77,6 +77,19 @@ fun <T : SettingsState> Cell<JBCheckBox>.bindSelected(
         )
     })
 
+
+fun Cell<JBCheckBox>.bindChecked(
+    graphProperty: ObservableMutableProperty<Rule?>,
+    property: KMutableProperty1<Rule, Boolean>
+) =
+    bindSelected(with(graphProperty) {
+        transform(
+            { it?.let(property::get) ?: true },
+            { value -> get()?.also { property.set(it, value) } }
+        )
+    })
+
+
 fun <T : JTextComponent> Cell<T>.bindText(
     graphProperty: ObservableMutableProperty<Rule?>,
     property: KMutableProperty1<Rule, String>

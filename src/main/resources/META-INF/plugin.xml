@@ -14,6 +14,13 @@
                 key="projectName"
                 id="CollapsedFilesProjectViewConfigurable"
                 instance="com.github.skeaner.collapsedfilesprojectview.settings.SettingsConfigurable"/>
+        
+        <searchScopesProvider
+                implementation="com.github.skeaner.collapsedfilesprojectview.provider.MySearchScopesProvider"/>
+        <treeStructureProvider
+                implementation="com.github.skeaner.collapsedfilesprojectview.provider.MyTreeStructureProvider"/>
+    
+    
     </extensions>
     
     <actions>

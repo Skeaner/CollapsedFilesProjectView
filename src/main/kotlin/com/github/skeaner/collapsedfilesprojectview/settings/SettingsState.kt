@@ -18,6 +18,8 @@ data class Rule(
 
     var pattern: String = DEFAULT_RULE_PATTERN,
 
+    var showChildren: Boolean = true, // New property to control whether to show children or not
+
     @get:OptionTag(converter = ColorConverter::class)
     var background: Color? = null,
 
