@@ -15,4 +15,19 @@
                 id="CollapsedFilesProjectViewConfigurable"
                 instance="com.github.skeaner.collapsedfilesprojectview.settings.SettingsConfigurable"/>
     </extensions>
+    
+    <actions>
+        <action id="ProjectView.CollapsedFilesAction"
+                class="com.github.skeaner.collapsedfilesprojectview.action.CollapsedFilesAction"
+                text="Collapse Files"
+                description="Action that lets you collapse the files located in the root of your project">
+            <add-to-group
+                    group-id="ProjectView.ToolWindow.SecondaryActions"
+                    relative-to-action="ProjectView.FlattenPackages"
+                    anchor="before"/>
+            <add-to-group group-id="WelcomeScreen.QuickStart" anchor="first"/>
+        
+        </action>
+    </actions>
+
 </idea-plugin>
