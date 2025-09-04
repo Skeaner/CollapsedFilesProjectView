@@ -1,19 +1,21 @@
 package com.github.skeaner.collapsedfilesprojectview
 
-import com.intellij.DynamicBundle
+import com.intellij.AbstractBundle
 import org.jetbrains.annotations.NonNls
 import org.jetbrains.annotations.PropertyKey
 
 @NonNls
-private const val BUNDLE = "messages.MyBundle"
+object MyBundle : AbstractBundle("messages.MyBundle") {
 
-object MyBundle : DynamicBundle(BUNDLE) {
 
+    @NonNls
+    const val BUNDLE = "messages.MyBundle"
+
+    @Suppress("SpreadOperator")
     @JvmStatic
-    fun message(@PropertyKey(resourceBundle = BUNDLE) key: String, vararg params: Any) =
-        getMessage(key, *params)
+    fun message(@PropertyKey(resourceBundle = BUNDLE) key: String, vararg params: Any) = getMessage(key, *params)
 
-    @Suppress("unused")
+    @Suppress("SpreadOperator")
     @JvmStatic
     fun messagePointer(@PropertyKey(resourceBundle = BUNDLE) key: String, vararg params: Any) =
         getLazyMessage(key, *params)

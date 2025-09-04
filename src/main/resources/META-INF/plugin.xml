@@ -9,7 +9,10 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.skeaner.collapsedfilesprojectview.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.skeaner.collapsedfilesprojectview.startup.MyProjectActivity" />
+        <projectConfigurable
+                groupId="tools"
+                key="projectName"
+                id="CollapsedFilesProjectViewConfigurable"
+                instance="com.github.skeaner.collapsedfilesprojectview.settings.SettingsConfigurable"/>
     </extensions>
 </idea-plugin>
