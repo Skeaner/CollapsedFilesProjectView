@@ -41,7 +41,7 @@ class RuleProjectViewNode2(
 
 
     override fun getChildren() =
-        nodes.map { if (!rule.showChildren && it is PsiDirectoryNode) NoChildProjectViewNode(project, it.value, viewSettings) else it }
+        nodes.map { if (!rule.showChildren && it is PsiDirectoryNode) NoChildProjectViewNode(project, it, viewSettings) else it }
 
     override fun contains(file: VirtualFile) = children.firstOrNull {
         it is ProjectViewNode && it.virtualFile == file
@@ -54,7 +54,6 @@ class RuleProjectViewNode2(
     override fun isAlwaysExpand(): Boolean {
         return false
     }
-
 
 
 }

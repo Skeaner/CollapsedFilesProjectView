@@ -1,9 +1,9 @@
 # Collapsible Files Project View
 
 
-[//]: # ([![Version]&#40;https://img.shields.io/jetbrains/plugin/v/17288.svg&#41;]&#40;https://plugins.jetbrains.com/plugin/17288&#41;)
+[![Version](https://img.shields.io/jetbrains/plugin/v/28380.svg)](https://plugins.jetbrains.com/plugin/17288)
 
-[//]: # ([![Downloads]&#40;https://img.shields.io/jetbrains/plugin/d/17288.svg&#41;]&#40;https://plugins.jetbrains.com/plugin/17288&#41;)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/28380.svg)](https://plugins.jetbrains.com/plugin/17288)
 
 <!-- Plugin description -->
 
@@ -37,14 +37,14 @@ Improvments:
 
 ## Installation
 
-[//]: # (- Using IDE built-in plugin system:)
+- Using IDE built-in plugin system:
 
-[//]: # ()
-[//]: # (  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Collapsible Files Project)
 
-[//]: # (  View"</kbd> >)
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Collapsible Files Project
 
-[//]: # (  <kbd>Install Plugin</kbd>)
+  View"</kbd> >
+
+  <kbd>Install Plugin</kbd>
 
 - Manually:
 
