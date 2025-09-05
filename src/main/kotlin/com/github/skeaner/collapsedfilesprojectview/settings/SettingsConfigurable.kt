@@ -11,13 +11,15 @@ import com.intellij.openapi.observable.properties.PropertyGraph
 import com.intellij.openapi.options.BoundSearchableConfigurable
 import com.intellij.openapi.options.Configurable.NoScroll
 import com.intellij.openapi.project.Project
+import com.intellij.ui.ContextHelpLabel
 import com.intellij.ui.OnePixelSplitter
 import com.intellij.ui.dsl.builder.*
+import com.intellij.ui.layout.not
 
 class SettingsConfigurable(val project: Project) : BoundSearchableConfigurable(
-    helpTopic = "CollapsedFilesProjectView",
-    _id = "CollapsedFilesProjectView",
-    displayName = "CollapsedFilesProjectView",
+    helpTopic = "CollapsibleFilesProjectView",
+    _id = "CollapsibleFilesProjectView",
+    displayName = "CollapsibleFilesProjectView",
 ), NoScroll {
 
     companion object {
@@ -29,6 +31,7 @@ class SettingsConfigurable(val project: Project) : BoundSearchableConfigurable(
     private val propertyGraph = PropertyGraph()
     private val settingsProperty = propertyGraph.lazyProperty { Settings().apply { copyFrom(settings) } }
     private val foldingEnabledPredicate = settingsProperty.createPredicate(Settings::enabled)
+    private val hideAllRulesPredicate = settingsProperty.createPredicate(Settings::hideAllRules)
 
     private val ruleProperty = propertyGraph
         .lazyProperty<Rule?> { null }
@@ -58,6 +61,24 @@ class SettingsConfigurable(val project: Project) : BoundSearchableConfigurable(
                     .bindSelected(settingsProperty, Settings::caseSensitive)
                     .comment(message("settings.caseSensitive.comment"), MAX_LINE_LENGTH_WORD_WRAP)
                     .applyToComponent { setMnemonic('c') }
+            }
+
+            row {
+                checkBox(message("settings.hideAllRules"))
+                    .bindSelected(settingsProperty, Settings::hideAllRules)
+                    .comment(message("settings.hideAllRules.comment"), MAX_LINE_LENGTH_WORD_WRAP)
+                    .gap(RightGap.SMALL)
+                    .applyToComponent { setMnemonic('i') }
+                visible(true)
+            }
+
+            row {
+                checkBox(message("settings.hideEmptyRules"))
+                    .bindSelected(settingsProperty, Settings::hideEmptyRules)
+                    .comment(message("settings.hideEmptyRules.comment"), MAX_LINE_LENGTH_WORD_WRAP)
+                    .applyToComponent { setMnemonic('h') }
+                    .enabledIf(hideAllRulesPredicate.not())
+                visible(true)
             }
 
         }.enabledIf(foldingEnabledPredicate)

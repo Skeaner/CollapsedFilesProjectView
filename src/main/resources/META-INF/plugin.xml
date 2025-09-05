@@ -12,7 +12,7 @@
         <projectConfigurable
                 groupId="tools"
                 key="projectName"
-                id="CollapsedFilesProjectViewConfigurable"
+                id="CollapsibleFilesProjectViewConfigurable"
                 instance="com.github.skeaner.collapsedfilesprojectview.settings.SettingsConfigurable"/>
         
         <applicationService serviceInterface="com.github.skeaner.collapsedfilesprojectview.settings.Settings" serviceImplementation="com.github.skeaner.collapsedfilesprojectview.settings.Settings"/>

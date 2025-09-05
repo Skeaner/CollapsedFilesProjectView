@@ -10,6 +10,8 @@ import java.awt.Color
 interface SettingsState {
     val enabled: Boolean
     val caseSensitive: Boolean
+    val hideEmptyRules: Boolean
+    val hideAllRules: Boolean
     val rules: MutableList<Rule>
 }
 

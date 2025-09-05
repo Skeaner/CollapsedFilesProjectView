@@ -84,16 +84,13 @@ class MyTreeStructureProvider(private val project: Project) : TreeStructureProvi
                     children
                         .match(it.pattern)
                         .run {
-                            if (this.isNotEmpty()) {
-                                matched.addAll(this)
-                                folders.add(
-                                    RuleProjectViewNode2(project, viewSettings, it, this)
-                                )
+                            matched.addAll(this)
+                            if (!settings.hideAllRules && !(settings.hideEmptyRules && this.isEmpty())) {
+                                folders.add(RuleProjectViewNode2(project, viewSettings, it, this))
                             }
                         }
 
                 }
-                // TODO: allow for duplicates? – checkbox in settings; otherwise the first rule will take the precedence
 
                 children - matched + folders
             }
