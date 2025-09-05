@@ -1,9 +1,9 @@
 # Collapsible Files Project View
 
 
-[![Version](https://img.shields.io/jetbrains/plugin/v/28380.svg)](https://plugins.jetbrains.com/plugin/17288)
+[![Version](https://img.shields.io/jetbrains/plugin/v/28380.svg)](https://plugins.jetbrains.com/plugin/28380)
 
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/28380.svg)](https://plugins.jetbrains.com/plugin/17288)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/28380.svg)](https://plugins.jetbrains.com/plugin/28380)
 
 <!-- Plugin description -->
 
