@@ -11,6 +11,7 @@ import com.intellij.ide.projectView.impl.ProjectViewPane
 import com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode
 import com.intellij.ide.projectView.impl.nodes.PsiFileNode
 import com.intellij.ide.util.treeView.AbstractTreeNode
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.module.ModuleUtil
 import com.intellij.openapi.observable.properties.ObservableMutableProperty
@@ -20,10 +21,12 @@ import com.intellij.openapi.vcs.FileStatusListener
 import com.intellij.openapi.vcs.FileStatusManager
 import com.intellij.openapi.vcs.changes.ignore.cache.PatternCache
 import com.intellij.openapi.vcs.changes.ignore.lang.Syntax
+import com.intellij.profile.codeInspection.ProjectInspectionProfileManager
+import java.beans.PropertyChangeEvent
 
 class MyTreeStructureProvider(private val project: Project) : TreeStructureProvider {
 
-    private val settings by lazy { project.service<Settings>() }
+    private val settings by lazy { ApplicationManager.getApplication().getService(Settings::class.java) }
     private val patternCache = PatternCache.getInstance(project)
     private var previewProjectViewPane: ProjectViewPane? = null
     private var previewGraphProperty: ObservableMutableProperty<Settings>? = null
@@ -32,14 +35,14 @@ class MyTreeStructureProvider(private val project: Project) : TreeStructureProvi
     // TODO: Move to project service?
     init {
         //订阅通知, 档设置变更时候刷新
-        project.messageBus
-            .connect(project)
-            .subscribe(SettingsListener.TOPIC, SettingsListener { settings ->
+        project.messageBus.connect()
+            .subscribe(SettingsListener.TOPIC, SettingsListener {
                 refreshProjectView()
             })
 
         FileStatusManager.getInstance(project).addFileStatusListener(object : FileStatusListener {
             override fun fileStatusesChanged() {
+//                refreshProjectView()
 //                if (state.foldIgnoredFiles) {
 //                    refreshProjectView()
 //                }
@@ -75,18 +78,22 @@ class MyTreeStructureProvider(private val project: Project) : TreeStructureProvi
 
             else -> {
                 val matched = mutableSetOf<AbstractTreeNode<*>>()
-
-                // TODO: allow for duplicates? – checkbox in settings; otherwise the first rule will take the precedence
-                val folders = state.rules.map { rule ->
-//                    (children - matched)
+                val folders = mutableListOf<AbstractTreeNode<*>>()
+                state.rules.forEach {
+                    //  (children - matched)
                     children
-                        .match(rule.pattern)
+                        .match(it.pattern)
                         .run {
-                            val matchedItems  = this
-                            matched.addAll(this)
-                            RuleProjectViewNode2(project, viewSettings, state, rule, matchedItems)
+                            if (this.isNotEmpty()) {
+                                matched.addAll(this)
+                                folders.add(
+                                    RuleProjectViewNode2(project, viewSettings, it, this)
+                                )
+                            }
                         }
+
                 }
+                // TODO: allow for duplicates? – checkbox in settings; otherwise the first rule will take the precedence
 
                 children - matched + folders
             }

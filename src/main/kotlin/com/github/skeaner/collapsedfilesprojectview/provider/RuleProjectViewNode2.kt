@@ -19,14 +19,10 @@ import com.intellij.ui.SimpleTextAttributes.STYLE_PLAIN
 class RuleProjectViewNode2(
     project: Project,
     private val viewSettings: ViewSettings?,
-    private val settings: Settings,
     private val rule: Rule,
     private val nodes: List<AbstractTreeNode<*>>,
-) : ProjectViewNode<String>(project, rule.name, viewSettings),
-    PsiElementProcessor<PsiFileSystemItem> {
+) : ProjectViewNode<String>(project, rule.toString(), viewSettings) {
 
-    val containsMatchedChildKey: Key<Boolean> = Key.create("FOLDABLE_PROJECT_VIEW_CONTAINS_MATCHED_CHILD")
-    val ruleScope = MySearchScope(project, rule.pattern, settings)
 
     override fun update(presentation: PresentationData) {
         presentation.apply {
@@ -40,43 +36,25 @@ class RuleProjectViewNode2(
 
     override fun toString() = name
 
-    override fun execute(item: PsiFileSystemItem): Boolean {
-        return true
-        val matched = matchesPattern(item)
-
-        if (matched) {
-//            putUserDataUntilRoot(item.parent, matched)
-            item.parent?.putUserData(containsMatchedChildKey, true)
-        }
-
-        return !matched // stop processing other children if this matches
-    }
-//    private fun putUserDataUntilRoot(item: PsiFileSystemItem?, matched: Boolean) { // replace ItemType with the actual type of item
-//        if (item == null || item == project) {
-//            return
-//        }
-//
-//        item.putUserData(containsMatchedChildKey, matched)
-//        putUserDataUntilRoot(item.parent, matched)
-//    }
-
 
     override fun computeBackgroundColor() = rule.background
 
 
-    override fun getChildren() = nodes.map { if (it is PsiDirectoryNode) NoChildProjectViewNode(project, it.value, viewSettings) else it }
+    override fun getChildren() =
+        nodes.map { if (!rule.showChildren && it is PsiDirectoryNode) NoChildProjectViewNode(project, it.value, viewSettings) else it }
 
-    override fun contains(file: VirtualFile) = true
+    override fun contains(file: VirtualFile) = children.firstOrNull {
+        it is ProjectViewNode && it.virtualFile == file
+    } != null
 
-//    override fun contains(file: VirtualFile) = children.firstOrNull {
-//        it is ProjectViewNode && it.virtualFile == file
-//    } != null
-
-    private fun matchesPattern(item: PsiFileSystemItem): Boolean {
-        // check userdata
-        if (item.isDirectory) {
-            return !item.processChildren(this@RuleProjectViewNode2)
-        } else
-            return ruleScope.contains(item.virtualFile) || !item.processChildren(this@RuleProjectViewNode2) // processChildren returns false if {#execute} found matched child
+    override fun isAutoExpandAllowed(): Boolean {
+        return false
     }
+
+    override fun isAlwaysExpand(): Boolean {
+        return false
+    }
+
+
+
 }

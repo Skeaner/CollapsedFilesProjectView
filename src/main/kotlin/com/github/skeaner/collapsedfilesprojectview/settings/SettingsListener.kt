@@ -1,6 +1,8 @@
 package com.github.skeaner.collapsedfilesprojectview.settings
 
 import com.intellij.util.messages.Topic
+import java.beans.PropertyChangeEvent
+import java.beans.PropertyChangeListener
 import java.util.*
 
 @FunctionalInterface
@@ -11,5 +13,5 @@ fun interface SettingsListener : EventListener {
         val TOPIC = Topic(SettingsListener::class.java)
     }
 
-    fun settingsChanged(settings: Settings)
+    fun settingsChanged()
 }

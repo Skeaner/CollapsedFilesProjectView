@@ -1,6 +1,7 @@
 package com.github.skeaner.collapsedfilesprojectview.provider
 
 import com.github.skeaner.collapsedfilesprojectview.settings.Settings
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
@@ -13,9 +14,9 @@ import com.intellij.psi.search.GlobalSearchScope
 class MySearchScope(
     project: Project,
     private val pattern: String,
-    private val settings: Settings = project.service<Settings>(),
 ) : GlobalSearchScope(project) {
 
+    private val settings: Settings = ApplicationManager.getApplication().getService(Settings::class.java)
     private val patternCache = PatternCache.getInstance(project)
     private val patterns = pattern
         .applyCaseSensitiveSettings()

@@ -3,7 +3,9 @@ package com.github.skeaner.collapsedfilesprojectview.settings
 import com.github.skeaner.collapsedfilesprojectview.MyBundle.message
 import com.github.skeaner.collapsedfilesprojectview.bindSelected
 import com.github.skeaner.collapsedfilesprojectview.createPredicate
+import com.intellij.execution.services.ServiceViewManager
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.observable.properties.PropertyGraph
 import com.intellij.openapi.options.BoundSearchableConfigurable
@@ -12,7 +14,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.ui.OnePixelSplitter
 import com.intellij.ui.dsl.builder.*
 
-class SettingsConfigurable(project: Project) : BoundSearchableConfigurable(
+class SettingsConfigurable(val project: Project) : BoundSearchableConfigurable(
     helpTopic = "CollapsedFilesProjectView",
     _id = "CollapsedFilesProjectView",
     displayName = "CollapsedFilesProjectView",
@@ -22,7 +24,7 @@ class SettingsConfigurable(project: Project) : BoundSearchableConfigurable(
         const val ID = "com.github.skeaner.collapsedfilesprojectview.settings.SettingsConfigurable"
     }
 
-    private val settings = project.service<Settings>()
+    private val settings = ApplicationManager.getApplication().getService(Settings::class.java)
 
     private val propertyGraph = PropertyGraph()
     private val settingsProperty = propertyGraph.lazyProperty { Settings().apply { copyFrom(settings) } }
@@ -95,6 +97,7 @@ class SettingsConfigurable(project: Project) : BoundSearchableConfigurable(
     override fun apply() {
         settings.copyFrom(settingsProperty.get())
         invalidateTable()
+        project.messageBus.syncPublisher(SettingsListener.TOPIC).settingsChanged()
     }
 
     override fun reset() {

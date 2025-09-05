@@ -21,14 +21,13 @@ import com.intellij.ui.SimpleTextAttributes.STYLE_PLAIN
 class RuleProjectViewNode(
     project: Project,
     private val viewSettings: ViewSettings?,
-    private val settings: Settings,
     private val rule: Rule,
     private val parent: PsiDirectoryNode,
 ) : ProjectViewNode<String>(project, rule.name, viewSettings), PsiFileSystemItemFilter,
     PsiElementProcessor<PsiFileSystemItem> {
 
     val containsMatchedChildKey: Key<Boolean> = Key.create("FOLDABLE_PROJECT_VIEW_CONTAINS_MATCHED_CHILD")
-    val ruleScope = MySearchScope(project, rule.pattern, settings)
+    val ruleScope = MySearchScope(project, rule.pattern)
 
     override fun update(presentation: PresentationData) {
         presentation.apply {

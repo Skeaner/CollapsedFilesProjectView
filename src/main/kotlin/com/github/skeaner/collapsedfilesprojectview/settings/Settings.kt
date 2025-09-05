@@ -5,7 +5,7 @@ import com.intellij.openapi.components.*
 import com.intellij.util.xmlb.annotations.OptionTag
 
 @Service(Service.Level.PROJECT)
-@State(name = "Settings", storages = [Storage(Constants.STORAGE_FILE)])
+@State(name = "CFPV_Settings", storages = [Storage(Constants.STORAGE_FILE)])
 class Settings : SettingsState, BaseState(), PersistentStateComponent<Settings> {
     @get:OptionTag("ENABLED")
     override var enabled by property(true)
@@ -21,4 +21,5 @@ class Settings : SettingsState, BaseState(), PersistentStateComponent<Settings> 
     override fun getState() = this
 
     override fun loadState(state: Settings) = copyFrom(state)
+
 }
