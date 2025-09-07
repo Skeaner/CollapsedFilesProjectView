@@ -2,7 +2,6 @@
 
 
 [![Version](https://img.shields.io/jetbrains/plugin/v/28380.svg)](https://plugins.jetbrains.com/plugin/28380)
-
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/28380.svg)](https://plugins.jetbrains.com/plugin/28380)
 
 <!-- Plugin description -->
@@ -39,12 +38,8 @@ Improvments:
 
 - Using IDE built-in plugin system:
 
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Collapsible Files Project View"</kbd> > <kbd>Install Plugin</kbd>
 
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Collapsible Files Project
-
-  View"</kbd> >
-
-  <kbd>Install Plugin</kbd>
 
 - Manually:
 

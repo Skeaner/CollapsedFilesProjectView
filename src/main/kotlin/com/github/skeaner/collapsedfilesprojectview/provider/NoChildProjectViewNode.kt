@@ -24,7 +24,7 @@ class NoChildProjectViewNode(
         presentation.apply {
             val textAttributes = SimpleTextAttributes(STYLE_PLAIN, null)
             addText(value.name, textAttributes)
-            setIcon(node.icon)
+            setIcon(AllIcons.Nodes.Folder)
         }
     }
 
